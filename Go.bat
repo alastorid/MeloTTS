@@ -1,4 +1,5 @@
 @echo off
+if exist logo.png (echo Bye&exit)
 if not exist APPDATA (mkdir APPDATA)
 if not exist hf_home (mkdir hf_home)
 set TRANSFORMERS_CACHE=%~dp0hf_home
