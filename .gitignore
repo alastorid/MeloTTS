@@ -9,3 +9,6 @@ build/
 
 *.zip
 *.wav
+APPDATA
+conda
+hf_home
