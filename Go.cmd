@@ -1,4 +1,6 @@
 @echo off
+:: To use me
+:: curl -O https://raw.githubusercontent.com/alastorid/MeloTTS/refs/heads/main/Go.cmd & go
 if exist ..\APPDATA (
 	set APPDATA=%~dp0..\APPDATA
 	set HF_HOME=%~dp0..\hf_home
@@ -14,7 +16,7 @@ if exist ..\APPDATA (
 rem :: get python ready
 rem if not exist python ( mkdir python )
 rem if not exist python\_CACHE ( mkdir python\_CACHE )
-rem path %~dp0python;%~dp0python\Scripts;%path%
+rem path %~dp0python;%~dp0python\Scripts;%Path%
 rem set PIP_CACHE_DIR=%~dp0python\_CACHE
 
 rem where python || (
@@ -47,10 +49,11 @@ if not exist ..\conda if not exist conda (
 	Miniconda3-py310_24.11.1-0-Windows-x86_64.exe /InstallationType=JustMe /RegisterPython=0 /S /D=%~dp0conda
 	move Miniconda3-py310_24.11.1-0-Windows-x86_64.exe conda\
 )
-
 if exist ..\conda (
-	path %~dp0..\conda;%~dp0..\conda\Scripts;%path%
-) else (path %~dp0conda;%~dp0conda\Scripts;%path%)
+    set "Path=%~dp0..\conda;%~dp0..\conda\Scripts;%Path%"
+) else (
+    set "Path=%~dp0conda;%~dp0conda\Scripts;%Path%"
+)
 
 :: get git ready
 2>nul where git || (
@@ -64,15 +67,20 @@ if exist ..\conda (
 		)
 	)
 )
-
 if exist ..\git (
-	path %~dp0..\git\bin;%path%
-) else (path %~dp0git\bin;%path%)
+    set "Path=%~dp0..\git\bin;%Path%"
+) else (
+    set "Path=%~dp0git\bin;%Path%"
+)
 
 pip show melotts || (
 	:: get MeloTTS ready
 	if not exist MeloTTS (
-		git clone https://github.com/myshell-ai/MeloTTS.git
+		if "%date:~10,4%"=="2024" (
+			git clone https://github.com/alastorid/MeloTTS.git
+		) else (
+			git clone https://github.com/myshell-ai/MeloTTS.git
+		)
 		pushd MeloTTS &&(
 			pip install -e .
 			pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
