@@ -1,9 +1,15 @@
 @echo off
-if not exist APPDATA (mkdir APPDATA)
-if not exist hf_home (mkdir hf_home)
-set TRANSFORMERS_CACHE=%~dp0hf_home
-set HF_HOME=%~dp0hf_home
-set APPDATA=%~dp0APPDATA
+if exist ..\APPDATA (
+	set APPDATA=%~dp0..\APPDATA
+	set HF_HOME=%~dp0..\hf_home
+	set TRANSFORMERS_CACHE=%~dp0..\hf_home
+) else (
+	if not exist APPDATA (mkdir APPDATA)
+	if not exist hf_home (mkdir hf_home)
+	set APPDATA=%~dp0APPDATA
+	set HF_HOME=%~dp0hf_home
+	set TRANSFORMERS_CACHE=%~dp0hf_home
+)
 
 rem :: get python ready
 rem if not exist python ( mkdir python )
@@ -33,7 +39,7 @@ rem :: fixup
 rem for /f "delims=" %%i in ('python -m certifi') do set "SSL_CERT_FILE=%%i"
 
 :: get conda
-if not exist conda (
+if not exist ..\conda if not exist conda (
 	mkdir conda
 	rem Miniconda3-latest-Windows-x86_64.exe <- big trouble
 	rem Miniconda3-py310_24.11.1-0-Windows-x86_64.exe
@@ -41,23 +47,32 @@ if not exist conda (
 	Miniconda3-py310_24.11.1-0-Windows-x86_64.exe /InstallationType=JustMe /RegisterPython=0 /S /D=%~dp0conda
 	move Miniconda3-py310_24.11.1-0-Windows-x86_64.exe conda\
 )
-path %~dp0conda;%~dp0conda\Scripts;%path%
 
-rem :: get git ready
-rem 2>nul where git || path %path%;%~dp0git\bin
-rem 2>nul where git || (
-rem 	if not exist git ( mkdir git )
-rem 	pushd git && (
-rem 		curl -L -O -c - https://github.com/git-for-windows/git/releases/download/v2.47.1.windows.1/PortableGit-2.47.1-64-bit.7z.exe
-rem 		echo Extract PortableGit-2.47.1-64-bit.7z.exe to %~dp0git\
-rem 		cmd /c PortableGit-2.47.1-64-bit.7z.exe -o. -y
-rem 		popd
-rem 	)
-rem )
-rem :: get MeloTTS ready
-rem if not exist MeloTTS (
-rem 	git clone https://github.com/myshell-ai/MeloTTS.git
-rem )
+if exist ..\conda (
+	path %~dp0..\conda;%~dp0..\conda\Scripts;%path%
+) else (path %~dp0conda;%~dp0conda\Scripts;%path%)
+
+:: get git ready
+2>nul where git || (
+	if not exist ..\git if not exist git (
+		mkdir git
+		pushd git && (
+			curl -L -O -c - https://github.com/git-for-windows/git/releases/download/v2.47.1.windows.1/PortableGit-2.47.1-64-bit.7z.exe
+			echo Extract PortableGit-2.47.1-64-bit.7z.exe to %~dp0git\
+			cmd /c PortableGit-2.47.1-64-bit.7z.exe -o. -y
+			popd
+		)
+	)
+)
+
+if exist ..\git (
+	path %~dp0..\git\bin;%path%
+) else (path %~dp0git\bin;%path%)
+
+:: get MeloTTS ready
+if not exist MeloTTS (
+	git clone https://github.com/myshell-ai/MeloTTS.git
+)
 
 pip show melotts || (
 	pip install -e .
