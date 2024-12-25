@@ -69,20 +69,23 @@ if exist ..\git (
 	path %~dp0..\git\bin;%path%
 ) else (path %~dp0git\bin;%path%)
 
-:: get MeloTTS ready
-if not exist MeloTTS (
-	git clone https://github.com/myshell-ai/MeloTTS.git
+pip show melotts || (
+	:: get MeloTTS ready
+	if not exist MeloTTS (
+		git clone https://github.com/myshell-ai/MeloTTS.git
+		pushd MeloTTS &&(
+			pip install -e .
+			pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+			python -m unidic download
+			(
+				echo import nltk
+				echo nltk.download^('averaged_perceptron_tagger_eng'^)
+			) > download_sth.py
+			python download_sth.py
+			del download_sth.py
+			popd
+		)
+	)
 )
 
-pip show melotts || (
-	pip install -e .
-	pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-	python -m unidic download
-	(
-		echo import nltk
-		echo nltk.download^('averaged_perceptron_tagger_eng'^)
-	) > download_sth.py
-	python download_sth.py
-	del download_sth.py
-	popd
-)
+melo-ui %*
