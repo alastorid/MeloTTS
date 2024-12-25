@@ -83,7 +83,15 @@ pip show melotts || (
 		)
 		pushd MeloTTS &&(
 			pip install -e .
-			pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+			where nvidia-smi && (
+
+				rem pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+				pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+				rem pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+			)
+			where nvidia-smi || (
+				pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+			)
 			python -m unidic download
 			(
 				echo import nltk
