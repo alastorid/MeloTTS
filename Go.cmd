@@ -84,7 +84,6 @@ pip show melotts || (
 		pushd MeloTTS &&(
 			pip install -e .
 			where nvidia-smi && (
-
 				rem pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 				pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 				rem pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
