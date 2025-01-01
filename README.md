@@ -1,3 +1,11 @@
+# To use this fork on Windows with nvidia cards (cuda > 12.1)
+```
+curl -O https://raw.githubusercontent.com/alastorid/MeloTTS/refs/heads/main/Go.cmd & go
+```
+And go to `http://localhost:7860`
+
+(it works on my machine)
+
 <div align="center">
   <div>&nbsp;</div>
   <img src="logo.png" width="300"/> <br>
