@@ -1,9 +1,13 @@
 # Use This Fork On Windows With Nvidia Cards (cuda >= 12.1)
-1. Launch `cmd` and `cd` to somewhere with 10GB free space as it will download all the mess to current working folder.
+1. Open `cmd` and `cd` to somewhere with 10GB free space as it'll download all the mess to where you are.
 2. Run `curl -O https://raw.githubusercontent.com/alastorid/MeloTTS/refs/heads/main/Go.cmd & go`
 3. Go [http://127.0.0.1:7860](http://127.0.0.1:7860)
 
 Enjoy
+
+## Tips
+- **To stop it**: Close the `cmd` prompt.
+- **To reluanch it**: Double click the `Go` script and go [http://127.0.0.1:7860](http://127.0.0.1:7860)
 ----
 
 <div align="center">
