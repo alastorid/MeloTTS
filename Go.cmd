@@ -76,7 +76,7 @@ if exist ..\git (
 pip show melotts || (
 	:: get MeloTTS ready
 	if not exist MeloTTS (
-		if "%date:~10,4%"=="2024" (
+		if "%date:~10,4%"=="2025" (
 			git clone https://github.com/alastorid/MeloTTS.git
 		) else (
 			git clone https://github.com/myshell-ai/MeloTTS.git
