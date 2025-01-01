@@ -7,7 +7,7 @@ Enjoy
 
 ## Tips
 - **To stop it**: Close the `cmd` prompt.
-- **To reluanch it**: Double click the `Go` script and go [http://127.0.0.1:7860](http://127.0.0.1:7860)
+- **To launch it**: Double click the `Go` script and go [http://127.0.0.1:7860](http://127.0.0.1:7860)
 ----
 
 <div align="center">
